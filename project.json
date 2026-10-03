@@ -1,0 +1,42 @@
+{
+  "name": "Canary Analyzer",
+  "kind": "canary",
+  "entity": "canary",
+  "accent": "#ca8a04",
+  "skills": "Release safety gates, error rates, latency comparison, automated analysis",
+  "description": "Analyze canary metrics against explicit rollout thresholds.",
+  "example": {
+    "name": "Checkout v2",
+    "requests": 200,
+    "errors": 1,
+    "baseline_latency_ms": 100.0,
+    "canary_latency_ms": 110.0,
+    "max_error_percent": 1.0,
+    "max_latency_ratio": 1.2
+  },
+  "port": 8118,
+  "fields": [
+    "name",
+    "requests",
+    "errors",
+    "baseline_latency_ms",
+    "canary_latency_ms",
+    "max_error_percent",
+    "max_latency_ratio"
+  ],
+  "stack": [
+    "Python",
+    "FastAPI",
+    "Angular",
+    "TypeScript",
+    "SQLite",
+    "Docker",
+    "Kubernetes",
+    "GitHub Actions"
+  ],
+  "demo_action": "analyze",
+  "demo_expected": {
+    "decision": "promote",
+    "error_percent": 0.5
+  }
+}

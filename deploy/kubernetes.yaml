@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: 18-canary-analyzer-data
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 18-canary-analyzer
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: 18-canary-analyzer
+  template:
+    metadata:
+      labels:
+        app: 18-canary-analyzer
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+        - name: app
+          image: 18-canary-analyzer:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8118
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8118
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8118
+            initialDelaySeconds: 5
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: 18-canary-analyzer-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 18-canary-analyzer
+spec:
+  selector:
+    app: 18-canary-analyzer
+  ports:
+    - port: 80
+      targetPort: 8118
