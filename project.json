@@ -1,5 +1,5 @@
 {
-  "name": "Canary Analyzer",
+  "name": "Canary Release Analyzer",
   "kind": "canary",
   "entity": "canary",
   "accent": "#ca8a04",
@@ -38,5 +38,7 @@
   "demo_expected": {
     "decision": "promote",
     "error_percent": 0.5
-  }
+  },
+  "slug": "canary-release-analyzer",
+  "engineering_version": "3.0.0"
 }

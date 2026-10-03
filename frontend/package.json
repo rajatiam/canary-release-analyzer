@@ -1,5 +1,5 @@
 {
-  "name": "18-canary-analyzer",
+  "name": "canary-release-analyzer",
   "version": "2.0.0",
   "private": true,
   "scripts": {
