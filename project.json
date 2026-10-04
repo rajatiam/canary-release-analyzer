@@ -40,5 +40,5 @@
     "error_percent": 0.5
   },
   "slug": "canary-release-analyzer",
-  "engineering_version": "3.0.0"
+  "engineering_version": "3.1.0"
 }
